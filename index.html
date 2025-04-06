@@ -82,45 +82,56 @@
     .month-select {
       margin-bottom: 10px;
     }
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
   body {
     font-size: 16px;
-    margin: 0;
     padding: 10px;
   }
 
   h1 {
     font-size: 20px;
     text-align: center;
-    margin-bottom: 10px;
   }
 
   .container {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    overflow-x: auto; /* ← 横スクロール許可 */
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 10px;
   }
 
   .calendar-container,
   .time-select {
-    flex: 0 0 auto;       /* ← サイズ自動調整なし */
-    width: 180px;         /* ← 固定サイズ */
-    min-width: 180px;
+    flex: 0 0 auto;
+    width: 200px;
+    min-width: 200px;
     box-sizing: border-box;
   }
 
   .calendar-container table {
     width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
   }
 
   .calendar-container th,
-  .calendar-container td,
+  .calendar-container td {
+    font-size: 16px;
+    padding: 8px;
+    width: 14.28%; /* 7列分で100%ぴったり */
+    text-align: center;
+    vertical-align: middle;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip; /* ← ellipsis やめて、切り捨て表示に */
+  }
+
   .time-option {
-    font-size: 14px;
-    padding: 6px;
+    font-size: 16px;
+    padding: 8px;
   }
 
   .time-select {
@@ -153,29 +164,7 @@
   .month-select {
     font-size: 15px;
   }
-
-    .calendar-container table {
-    width: 100%;
-    table-layout: fixed; /* ← これでセル幅均等に固定 */
-  }
-
-  .calendar-container th,
-  .calendar-container td {
-    font-size: 14px;
-    padding: 6px;
-    width: auto;         /* ← 幅指定を解除して自動調整に */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    box-sizing: border-box;
-  }
-
-    .calendar-container {
-    overflow-x: hidden;
-  }
-
-    
-}
+} 
 
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857"
