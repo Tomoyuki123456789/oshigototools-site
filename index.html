@@ -154,20 +154,21 @@
       font-size: 15px;
     }
 
-      .calendar-container table {
+    .calendar-container table {
       width: 100%;
       table-layout: fixed; /* ← これでセル幅均等に固定 */
     }
 
     .calendar-container th,
-  .calendar-container td {
-    font-size: 3.5vw; /* ← 画面幅に応じて自動調整 */
-    padding: 6px;
-    width: auto;
-    overflow: hidden;
-    white-space: nowrap;
-    box-sizing: border-box;
-  }
+    .calendar-container td {
+        font-size: 2.8vw; /* ← 3.5vw → 3vw に調整 */
+        padding: 2px 0;    /* ← padding 6px → 4px に圧縮 */
+        width: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
 
       .calendar-container {
       overflow-x: hidden;
