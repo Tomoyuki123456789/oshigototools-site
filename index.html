@@ -44,13 +44,17 @@
       height: 240px;
       overflow-y: auto;
       padding: 0;
+      width: 240px; /* ← 2倍くらいに */
       border: 1px solid #ccc;
-      box-shadow: inset 0 -6px 6px -6px rgba(0, 0, 0, 0.2); /* 下に影で「続きがある」感 */
+      box-shadow:
+        inset 0 -6px 6px -6px rgba(0, 0, 0, 0.15),  /* 下に影 */
+        inset 0 6px 6px -6px rgba(0, 0, 0, 0.15);   /* 上に影 */
       scroll-behavior: smooth;
+      box-sizing: border-box;
     }
 
     .time-option {
-      font-size: 14px;
+      font-size: 14px; /* ← カレンダーと統一 */
       padding: 6px 0;
       text-align: center;
       white-space: nowrap;
@@ -114,9 +118,16 @@
 
     .calendar-container,
     .time-select {
-      flex: 0 0 auto;       /* ← サイズ自動調整なし */
-      width: 180px;         /* ← 固定サイズ */
-      min-width: 180px;
+      width: 90px; /* ← 半分くらいにする */
+      min-width: 90px;
+      height: 240px;
+      overflow-y: auto;
+      padding: 0;
+      border: 1px solid #ccc;
+      box-shadow:
+        inset 0 -6px 6px -6px rgba(0, 0, 0, 0.15),
+        inset 0 6px 6px -6px rgba(0, 0, 0, 0.15);
+      scroll-behavior: smooth;
       box-sizing: border-box;
     }
 
@@ -127,15 +138,11 @@
     .calendar-container th,
     .calendar-container td,
     .time-option {
-    font-size: 2.8vw;
-    padding: 2px 0;
+      font-size: 2.8vw; /* ← カレンダーと揃えるスマホ版 */
+      padding: 2px 0;
     }
 
-    .time-select {
-      height: 240px;
-      overflow-y: auto;
-    }
-
+ 
     textarea {
       font-size: 15px;
       padding: 10px;
