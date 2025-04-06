@@ -85,7 +85,7 @@
       @media (max-width: 768px) {
     body {
       font-size: 16px;
-      padding: 10px;
+      padding: 12px;
     }
 
     h1 {
@@ -94,21 +94,24 @@
     }
 
     .container {
+      display: flex;
       flex-direction: row;
-      gap: 8px;
-      overflow-x: auto; /* ← 横スクロールOKにする */
+      gap: 12px;
+      overflow-x: auto; /* 横スクロール許可 */
+      -webkit-overflow-scrolling: touch; /* スマホでスムーズにスクロール */
     }
 
     .calendar-container,
     .time-select {
-      flex: 0 0 auto;     /* 固定幅にする */
-      width: 160px;       /* ← 狭めに調整して並べる */
+      flex: 0 0 auto; /* 幅を固定扱いにする */
+      width: 170px;   /* スマホでも収まるギリサイズ */
+      min-width: 170px;
     }
 
     .calendar-container th,
     .calendar-container td,
     .time-option {
-      font-size: 15px;
+      font-size: 14px;
       padding: 6px;
     }
 
