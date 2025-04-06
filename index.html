@@ -153,6 +153,28 @@
   .month-select {
     font-size: 15px;
   }
+
+    .calendar-container table {
+    width: 100%;
+    table-layout: fixed; /* ← これでセル幅均等に固定 */
+  }
+
+  .calendar-container th,
+  .calendar-container td {
+    font-size: 14px;
+    padding: 6px;
+    width: auto;         /* ← 幅指定を解除して自動調整に */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+    .calendar-container {
+    overflow-x: hidden;
+  }
+
+    
 }
 
   </style>
