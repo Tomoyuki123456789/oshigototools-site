@@ -41,19 +41,23 @@
     }
     /* 時刻選択部分 */
     .time-select {
-      border: 1px solid #ccc;
-      padding: 10px;
-      width: 120px;
-      height: 200px; /* 固定高さでスクロールを有効に */
+      height: 240px;
       overflow-y: auto;
+      padding: 0;
+      border: 1px solid #ccc;
+      box-shadow: inset 0 -6px 6px -6px rgba(0, 0, 0, 0.2); /* 下に影で「続きがある」感 */
+      scroll-behavior: smooth;
     }
+
     .time-option {
-      font-size: 2.8vw;
-      padding: 6px 0;
+      font-size: 2.8vw;          /* ← カレンダーと同じ */
+      padding: 2px 0;            /* ← 上下だけにしてコンパクトに */
       text-align: center;
       white-space: nowrap;
       overflow: hidden;
+      box-sizing: border-box;
     }
+
     .time-option:hover {
       background-color: #d0f0ff;
     }
