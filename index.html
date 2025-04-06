@@ -116,11 +116,12 @@
     padding-bottom: 10px;
   }
 
-  /* カレンダー枠は大きくする */
+  /* カレンダー枠は十分な幅に（例: 180px） */
   .calendar-container {
-    width: 180px;      /* ← ここを90pxから180pxに変更 */
+    width: 180px;
     min-width: 180px;
     height: 240px;
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 0;
     border: 1px solid #ccc;
@@ -129,10 +130,10 @@
       inset 0 6px 6px -6px rgba(0, 0, 0, 0.15);
     scroll-behavior: smooth;
     box-sizing: border-box;
-    overflow-x: hidden;
+    flex: 0 0 auto;
   }
 
-  /* 時刻選択欄はそのまま狭くする */
+  /* 時刻選択欄は狭く（例: 90px） */
   .time-select {
     width: 90px;
     min-width: 90px;
@@ -150,18 +151,19 @@
 
   .calendar-container table {
     width: 100%;
-    table-layout: fixed; /* セル幅均等に */
+    table-layout: fixed; /* 各セルを均等に */
   }
 
-  /* カレンダーと時刻の文字サイズは2.8vwで統一（必要ならPC側は別指定） */
+  /* カレンダーセルと時刻選択の文字サイズを固定（例: 12px）に */
   .calendar-container th,
   .calendar-container td,
   .time-option {
-    font-size: 2.8vw;
-    padding: 2px 0;
+    font-size: 12px;
+    padding: 1px 0;
     white-space: nowrap;
     overflow: hidden;
     box-sizing: border-box;
+    text-align: center;
   }
 
   textarea {
@@ -190,6 +192,7 @@
     font-size: 15px;
   }
 }
+
 
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857"
