@@ -81,48 +81,28 @@
     .month-select {
       margin-bottom: 10px;
     }
-    /* --- 追加: モバイル最適化レスポンシブ対応 --- */
-    body {
-      font-size: 16px; /* 全体フォント少し大きく */
-    }
-
-    .calendar-container th,
-    .calendar-container td,
-    .time-option {
-      font-size: 16px;
-      padding: 8px; /* タップしやすく */
-    }
-
-    .time-select {
-      width: 120px;
-      height: 240px;
-      font-size: 16px;
-    }
-
-    textarea {
-      font-size: 16px;
-      padding: 10px;
-    }
-
-    /* スマホレイアウト対応 */
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
+        @media (max-width: 768px) {
+      body {
+        font-size: 16px;
       }
 
-      .calendar-container,
-      .time-select {
-        width: 100%;
+      .calendar-container th,
+      .calendar-container td,
+      .time-option,
+      textarea {
+        font-size: 16px;
+        padding: 10px;
       }
 
       .btn-area {
         flex-direction: column;
-        align-items: stretch;
+        gap: 10px;
       }
 
       button {
         font-size: 16px;
-        padding: 12px;
+        padding: 14px;
+        width: 100%;
       }
     }
   </style>
