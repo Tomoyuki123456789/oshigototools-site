@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>お問い合わせ - カレンダー時刻選択ツール</title>
+  
+  <!-- Meta Tags -->
+  <meta name="description" content="お問い合わせページ。ご質問やご意見をお送りください。">
+  <meta name="keywords" content="お問い合わせ, カレンダー, 時刻選択">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="お問い合わせ - カレンダー時刻選択ツール">
+  <meta property="og:description" content="ご質問やご意見をお送りください。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://example.com/contact.html">
+  <meta property="og:image" content="http://example.com/og-image.jpg">
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "カレンダー時刻選択ツール",
+    "url": "http://example.com/contact.html",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+81-XX-XXXX-XXXX",
+      "contactType": "customer service",
+      "email": "contact@example.com"
+    }
+  }
+  </script>
+  
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form div {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 2px;
+      background-color: #007BFF;
+      color: #fff;
+    }
+    footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 20px;
+      color: #666;
+    }
+    footer a {
+      color: blue;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>お問い合わせ</h1>
+  <form action="/submit_contact" method="post">
+    <div>
+      <label for="name">お名前:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="email">メールアドレス:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="message">メッセージ:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+    <button type="submit">送信</button>
+  </form>
+</div>
+
+<footer>
+  <a href="/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>
+</footer>
+
+</body>
+</html>
