@@ -4,6 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>カレンダー時刻選択ツール</title>
+  
+  <!-- Meta Tags -->
+  <meta name="description" content="カレンダー時刻選択ツール - Google Adsense審査突破のための最適化されたツールです。">
+  <meta name="keywords" content="カレンダー, 時刻選択, Google Adsense, 問い合わせ">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="カレンダー時刻選択ツール">
+  <meta property="og:description" content="カレンダー時刻選択ツールで時間を選び、効率的なスケジュール管理をサポート。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://example.com/">
+  <meta property="og:image" content="http://example.com/og-image.jpg">
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "カレンダー時刻選択ツール",
+    "url": "http://example.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "http://example.com/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+81-XX-XXXX-XXXX",
+      "contactType": "customer service",
+      "email": "contact@example.com"
+    }
+  }
+  </script>
+  
   <style>
     body {
       font-family: sans-serif;
@@ -44,25 +78,22 @@
       height: 240px;
       overflow-y: auto;
       padding: 0;
-      width: 240px; /* ← 2倍くらいに */
+      width: 240px;
       border: 1px solid #ccc;
       box-shadow:
-        inset 0 -6px 6px -6px rgba(0, 0, 0, 0.15),  /* 下に影 */
-        inset 0 6px 6px -6px rgba(0, 0, 0, 0.15);   /* 上に影 */
+        inset 0 -6px 6px -6px rgba(0, 0, 0, 0.15),
+        inset 0 6px 6px -6px rgba(0, 0, 0, 0.15);
       scroll-behavior: smooth;
       box-sizing: border-box;
     }
-
     .time-option {
-      font-size: 14px; /* ← カレンダーと統一 */
+      font-size: 14px;
       padding: 6px 0;
       text-align: center;
       white-space: nowrap;
       overflow: hidden;
       box-sizing: border-box;
     }
-
-
     .time-option:hover {
       background-color: #d0f0ff;
     }
@@ -88,131 +119,119 @@
       font-size: 14px;
       padding: 8px;
       box-sizing: border-box;
-      /* ユーザーが自由に編集可能 */
     }
     /* 月選択のスタイル */
     .month-select {
       margin-bottom: 10px;
     }
     @media (max-width: 768px) {
-  /* 全体設定 */
-  body {
-    font-size: 16px;
-    margin: 0;
-    padding: 10px;
-  }
-  h1 {
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  /* コンテナの横幅を95vwに固定して中央寄せ */
-  .container {
-    width: 95vw;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    gap: 10px; /* 2つのボックス間のギャップ */
-    overflow-x: hidden;
-  }
-  /* 時刻選択欄：固定幅 90px */
-  .time-select {
-    width: 90px;
-    min-width: 90px;
-    height: 240px;
-    overflow-y: auto;
-    padding: 0;
-    border: 1px solid #ccc;
-    box-shadow:
-      inset 0 -6px 6px -6px rgba(0,0,0,0.15),
-      inset 0 6px 6px -6px rgba(0,0,0,0.15);
-    scroll-behavior: smooth;
-    box-sizing: border-box;
-    flex: 0 0 auto;
-  }
-  /* カレンダー欄：残りの幅を確保 */
-  .calendar-container {
-    /* コンテナ幅 95vw から時刻選択幅 90px とギャップ 10px を引いた値 */
-    width: calc(95vw - 90px - 10px);
-    min-width: calc(95vw - 90px - 10px);
-    height: 240px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
-    border: 1px solid #ccc;
-    box-shadow:
-      inset 0 -6px 6px -6px rgba(0,0,0,0.15),
-      inset 0 6px 6px -6px rgba(0,0,0,0.15);
-    scroll-behavior: smooth;
-    box-sizing: border-box;
-    flex: 0 0 auto;
-  }
-  /* カレンダー内テーブル：固定レイアウトで均等な7列 */
-  .calendar-container table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-  }
-  /* カレンダーのセル：均等な幅、文字サイズは見やすい固定サイズに */
-  .calendar-container th,
-  .calendar-container td {
-    font-size: 14px; /* PC版と同じサイズにするか、微調整してください */
-    padding: 4px 0;
-    text-align: center;
-    vertical-align: middle;
-    overflow: hidden;
-    white-space: nowrap;
-    box-sizing: border-box;
-  }
-  /* 時刻選択の文字もカレンダーと統一 */
-  .time-option {
-    font-size: 14px;
-    padding: 4px 0;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    box-sizing: border-box;
-  }
-  /* その他の要素はそのまま */
-  textarea {
-    font-size: 15px;
-    padding: 10px;
-    width: 100%;
-    margin: 10px auto;
-    display: block;
-    box-sizing: border-box;
-  }
-  .btn-area {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-  }
-  button {
-    font-size: 16px;
-    padding: 12px 16px;
-    width: 100%;
-    max-width: 300px;
-  }
-  .month-select {
-    font-size: 15px;
-  }
-}
-
-
-
+      body {
+        font-size: 16px;
+        margin: 0;
+        padding: 10px;
+      }
+      h1 {
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .container {
+        width: 95vw;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        overflow-x: hidden;
+      }
+      .time-select {
+        width: 90px;
+        min-width: 90px;
+        height: 240px;
+        overflow-y: auto;
+        padding: 0;
+        border: 1px solid #ccc;
+        box-shadow:
+          inset 0 -6px 6px -6px rgba(0,0,0,0.15),
+          inset 0 6px 6px -6px rgba(0,0,0,0.15);
+        scroll-behavior: smooth;
+        box-sizing: border-box;
+        flex: 0 0 auto;
+      }
+      .calendar-container {
+        width: calc(95vw - 90px - 10px);
+        min-width: calc(95vw - 90px - 10px);
+        height: 240px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0;
+        border: 1px solid #ccc;
+        box-shadow:
+          inset 0 -6px 6px -6px rgba(0,0,0,0.15),
+          inset 0 6px 6px -6px rgba(0,0,0,0.15);
+        scroll-behavior: smooth;
+        box-sizing: border-box;
+        flex: 0 0 auto;
+      }
+      .calendar-container table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+      }
+      .calendar-container th,
+      .calendar-container td {
+        font-size: 14px;
+        padding: 4px 0;
+        text-align: center;
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+      }
+      .time-option {
+        font-size: 14px;
+        padding: 4px 0;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      textarea {
+        font-size: 15px;
+        padding: 10px;
+        width: 100%;
+        margin: 10px auto;
+        display: block;
+        box-sizing: border-box;
+      }
+      .btn-area {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      button {
+        font-size: 16px;
+        padding: 12px 16px;
+        width: 100%;
+        max-width: 300px;
+      }
+      .month-select {
+        font-size: 15px;
+      }
+    }
   </style>
+  
+  <!-- Google Adsense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857"
   crossorigin="anonymous"></script>
   
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9WSSYVFF7J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9WSSYVFF7J');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WSSYVFF7J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9WSSYVFF7J');
+  </script>
 </head>
 <body>
 
@@ -238,6 +257,28 @@
     <button id="copyBtn">COPY</button>
     <button id="resetBtn">RESET</button>
   </div>
+</div>
+
+<!-- 問い合わせフォーム -->
+<div id="contact-form" style="margin-top: 40px; padding: 20px; border: 1px solid #ccc;">
+  <h2>お問い合わせ</h2>
+  <form action="#" method="post">
+    <div style="margin-bottom: 10px;">
+      <label for="name">お名前:</label><br>
+      <input type="text" id="name" name="name" style="width: 100%;" required>
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="email">メールアドレス:</label><br>
+      <input type="email" id="email" name="email" style="width: 100%;" required>
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="message">メッセージ:</label><br>
+      <textarea id="message" name="message" style="width: 100%; height: 100px;" required></textarea>
+    </div>
+    <div>
+      <button type="submit" style="padding: 8px 16px;">送信</button>
+    </div>
+  </form>
 </div>
 
 <script>
@@ -284,7 +325,6 @@
   // 出力欄の最終行（作業中のエントリ行）を更新する
   function updateCurrentEntryLine() {
     const lines = resultText.value.split("\n");
-    // 常に最終行を作業中エントリで上書き
     lines[lines.length - 1] = formatEntry(currentEntry);
     resultText.value = lines.join("\n");
   }
@@ -303,14 +343,14 @@
   function generateMonthOptions() {
     const today = new Date();
     const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth(); // 0-indexed
+    const currentMonth = today.getMonth();
     const start = new Date(currentYear - 1, currentMonth, 1);
     const end = new Date(currentYear + 1, currentMonth, 1);
     
     let optionDate = new Date(start);
     while(optionDate <= end) {
       const year = optionDate.getFullYear();
-      const month = optionDate.getMonth(); // 0-indexed
+      const month = optionDate.getMonth();
       const optionValue = year + "-" + String(month + 1).padStart(2, '0');
       const optionText = year + "年" + (month + 1) + "月";
       const optionElem = document.createElement("option");
@@ -341,12 +381,10 @@
     const startDay = firstDay.getDay();
     const daysInMonth = new Date(year, month, 0).getDate();
     let row = document.createElement("tr");
-    // 空セルを追加
     for (let i = 0; i < startDay; i++) {
       const cell = document.createElement("td");
       row.appendChild(cell);
     }
-    // 各日付セルを作成
     for (let day = 1; day <= daysInMonth; day++) {
       if ((startDay + day - 1) % 7 === 0 && day !== 1) {
         tbody.appendChild(row);
@@ -357,21 +395,17 @@
       const formattedDate = year + "-" + String(month).padStart(2, "0") + "-" + String(day).padStart(2, "0");
       cell.setAttribute("data-date", formattedDate);
       cell.addEventListener("click", () => {
-        // 新たな日付クリック時は必ず末尾に新規行を追加
-        // 既に同じ日付が作業中なら再選択は無視
         if (currentEntry && currentEntry.date === formattedDate) {
           return;
         }
         currentEntry = { date: formattedDate, times: [] };
         appendNewEntry(currentEntry);
-        // カレンダーの選択状態更新
         const cells = calendarContainer.querySelectorAll("td[data-date]");
         cells.forEach(c => c.classList.remove("selected-date"));
         cell.classList.add("selected-date");
       });
       row.appendChild(cell);
     }
-    // 行末の空セル埋め
     while (row.children.length < 7) {
       const cell = document.createElement("td");
       row.appendChild(cell);
@@ -402,44 +436,36 @@
           currentEntry.times = [];
         }
         const times = currentEntry.times;
-        // もし最後の時間枠が存在し、かつ終了時刻が設定されているなら新しい時間枠を追加
         if (times.length === 0 || (times[times.length - 1].start && times[times.length - 1].end)) {
           times.push({ start: timeStr, end: "" });
-        }
-        // もし最後の時間枠が存在し、開始時刻のみ設定されているなら終了時刻を設定
-        else if (times[times.length - 1].start && !times[times.length - 1].end) {
+        } else if (times[times.length - 1].start && !times[times.length - 1].end) {
           times[times.length - 1].end = timeStr;
         }
         updateCurrentEntryLine();
       });
       timeSelect.appendChild(div);
     }
-    // 初期表示は10:00の位置にスクロール
     const tenOption = timeSelect.querySelector('[data-time="10:00"]');
     if (tenOption) {
       timeSelect.scrollTop = tenOption.offsetTop;
     }
   }
   
-  // COPY ボタン
   document.getElementById("copyBtn").addEventListener("click", () => {
     navigator.clipboard.writeText(resultText.value)
       .then(() => { alert("コピーしました！"); })
       .catch(err => { console.error("コピーに失敗:", err); });
   });
   
-  // RESET ボタン
   document.getElementById("resetBtn").addEventListener("click", () => {
     resultText.value = "";
     currentEntry = null;
-    // カレンダー・時刻選択の選択状態をリセット
     const dateCells = calendarContainer.querySelectorAll("td[data-date]");
     dateCells.forEach(c => c.classList.remove("selected-date"));
     const timeOptions = timeSelect.querySelectorAll(".time-option");
     timeOptions.forEach(o => o.classList.remove("selected-time"));
   });
   
-  // 初期化処理
   generateMonthOptions();
   const today = new Date();
   const defaultMonth = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0');
@@ -452,9 +478,9 @@
   });
 </script>
 
-</body>
-</html>
-
 <footer style="text-align: center; font-size: 14px; padding: 20px; color: #666;">
   <a href="/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>
 </footer>
+
+</body>
+</html>
