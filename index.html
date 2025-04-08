@@ -435,13 +435,9 @@
       .catch(err => { console.error("コピーに失敗:", err); });
   });
   
+  // 修正：RESETボタン押下時にページ全体をリロードして初期状態に戻す
   document.getElementById("resetBtn").addEventListener("click", () => {
-    resultText.value = "";
-    currentEntry = null;
-    const dateCells = calendarContainer.querySelectorAll("td[data-date]");
-    dateCells.forEach(c => c.classList.remove("selected-date"));
-    const timeOptions = timeSelect.querySelectorAll(".time-option");
-    timeOptions.forEach(o => o.classList.remove("selected-time"));
+    window.location.reload();
   });
   
   generateMonthOptions();
