@@ -43,23 +43,34 @@
       font-family: sans-serif;
       margin: 20px;
     }
-    /* PC・デスクトップで左寄せ、モバイルも基本的に同じだが幅はメディアクエリで切り替え */
+    /* PC（モバイル以外）の場合の設定 */
+    .calendar-container {
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: flex;
+      flex-direction: column; /* 月選択とカレンダー本体を縦に並べる */
+      width: 370px; /* 以前の250pxから拡大 */
+      box-sizing: border-box;
+      position: relative;
+    }
+    .time-select {
+      /* PC版：幅を半分（120px）に */
+      width: 120px;
+      border: 1px solid #ccc;
+      box-shadow:
+        inset 0 -6px 6px -6px rgba(0,0,0,0.15),
+        inset 0 6px 6px -6px rgba(0,0,0,0.15);
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+    
+    /* 共通 */
     .container {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
       margin: 20px 0;
       align-items: flex-start; /* 時刻セレクタとカレンダーを上揃え */
-    }
-    /* カレンダー部分 */
-    .calendar-container {
-      border: 1px solid #ccc;
-      padding: 10px;
-      display: flex;
-      flex-direction: column; /* 月選択とカレンダー本体を縦に並べる */
-      width: 250px; /* 必要に応じて変更 */
-      box-sizing: border-box;
-      position: relative;
     }
     /* 月選択部分： 3要素を等間隔に並べる */
     .month-select {
@@ -69,7 +80,7 @@
       margin-bottom: 10px;
     }
     .nav-btn {
-      width: 60px;       /* ご要望の2倍幅など */
+      width: 60px;       
       height: 40px;
       font-size: 16px;
     }
@@ -78,7 +89,7 @@
       line-height: 40px; /* 縦中央揃え */
       font-size: 16px;
       text-align: center;
-      flex: 1;           /* ボタンと一緒に両端に寄せるため */
+      flex: 1;
       margin: 0 8px;
     }
     /* カレンダー本体（テーブル） */
@@ -93,6 +104,7 @@
       text-align: center;
       vertical-align: middle;
       cursor: pointer;
+      box-sizing: border-box;
     }
     .calendar-container th {
       background-color: #f0f0f0;
@@ -105,19 +117,9 @@
     }
     /* 前後の月の日付 */
     .adjacent-month {
-      color: #999; /* グレー表示 */
+      color: #999;
     }
-    /* 時刻選択部分 */
-    .time-select {
-      /* heightはJSで動的に設定（カレンダーと同じ高さにする） */
-      width: 240px;
-      border: 1px solid #ccc;
-      box-shadow:
-        inset 0 -6px 6px -6px rgba(0,0,0,0.15),
-        inset 0 6px 6px -6px rgba(0,0,0,0.15);
-      overflow-y: auto;
-      box-sizing: border-box;
-    }
+    /* 時刻選択 */
     .time-option {
       font-size: 14px;
       padding: 6px 0;
@@ -176,12 +178,12 @@
       .calendar-container {
         width: calc(95vw - 90px - 10px);
         min-width: calc(95vw - 90px - 10px);
-        /* こちらも高さをJSで合わせる */
       }
       .calendar-container table {
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
+        box-sizing: border-box;  /* 追加：中身の幅が枠と一致 */
       }
       .calendar-container th,
       .calendar-container td {
@@ -189,30 +191,23 @@
         padding: 4px 0;
         text-align: center;
         vertical-align: middle;
-        overflow: hidden;
         white-space: nowrap;
-        box-sizing: border-box;
       }
       .time-select {
         width: 90px;
         min-width: 90px;
-        /* 同じくJSで高さをあわせる */
       }
       .time-option {
         font-size: 14px;
         padding: 4px 0;
         text-align: center;
         white-space: nowrap;
-        overflow: hidden;
-        box-sizing: border-box;
       }
       textarea {
         font-size: 15px;
         padding: 10px;
-        width: 100%;
         margin: 10px auto;
         display: block;
-        box-sizing: border-box;
       }
       .btn-area {
         flex-direction: column;
@@ -222,7 +217,6 @@
       button {
         font-size: 16px;
         padding: 12px 16px;
-        width: 100%;
         max-width: 300px;
       }
     }
@@ -262,7 +256,7 @@
   <div class="time-select" id="timeSelect"></div>
 </div>
 
-<!-- 出力欄（編集可能）とボタン -->
+<!-- 出力エリア（編集可能）とボタン -->
 <div class="result-area">
   <textarea id="resultText"></textarea>
   <div class="btn-area">
@@ -280,8 +274,8 @@
   const prevMonthBtn = document.getElementById("prevMonthBtn");
   const nextMonthBtn = document.getElementById("nextMonthBtn");
   const monthDisplay = document.getElementById("monthDisplay");
-  const calendarBody = document.getElementById("calendarBody"); // テーブルを入れるコンテナ
-  const calendarContainer = document.getElementById("calendarContainer"); // カレンダー全体
+  const calendarBody = document.getElementById("calendarBody");
+  const calendarContainer = document.getElementById("calendarContainer");
 
   // 曜日配列
   const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
@@ -324,7 +318,7 @@
     return month + "月" + day + "日(" + wday + ")";
   }
   
-  // 出力欄の最終行を作業中エントリに置き換え
+  // 出力欄の最終行を更新
   function updateCurrentEntryLine() {
     const lines = resultText.value.split("\n");
     lines[lines.length - 1] = formatEntry(currentEntry);
@@ -346,26 +340,18 @@
     calendarBody.innerHTML = "";
     
     const year = dateObj.getFullYear();
-    const month = dateObj.getMonth() + 1; // 1～12
-    // 今月の1日
+    const month = dateObj.getMonth() + 1;
     const firstDay = new Date(year, month - 1, 1);
-    // 今月の最終日
     const daysInMonth = new Date(year, month, 0).getDate();
-    // 1日の曜日 (0=日,1=月,...,6=土)
     const startDay = firstDay.getDay();
 
     // 前月の最終日
-    // JSで (month-1, 0) とすると当月から見た月初の1日前=前月の最終日
     const prevMonthLastDate = new Date(year, month - 1, 0).getDate();
-    // 前月・翌月の年と月を計算
-    // monthが1(1月)のときは 前月=12月, year-1
-    // monthが12(12月)のときは 翌月=1月, year+1
     const prevMonthYear = (month === 1) ? (year - 1) : year;
     const prevMonth     = (month === 1) ? 12 : (month - 1);
     const nextMonthYear = (month === 12) ? (year + 1) : year;
     const nextMonth     = (month === 12) ? 1  : (month + 1);
 
-    // テーブル要素
     const table = document.createElement("table");
     
     // thead
@@ -381,10 +367,9 @@
     
     // tbody
     const tbody = document.createElement("tbody");
-    // 6行×7列 = 42セル でカレンダー表示（最大でも6週あれば足りる）
     let cellCount = 0;
-    let currentDay = 1;     // 今月の日付をカウント
-    let nextMonthDay = 1;   // 次月の日付をカウント
+    let currentDay = 1;
+    let nextMonthDay = 1;
     
     for (let row = 0; row < 6; row++) {
       const tr = document.createElement("tr");
@@ -392,58 +377,42 @@
       for (let col = 0; col < 7; col++) {
         const cell = document.createElement("td");
         cellCount++;
-
-        // 前月パート
+        
         if (cellCount <= startDay) {
-          // 前月の終わりの日付を逆算
           const dayNum = prevMonthLastDate - (startDay - cellCount);
           cell.textContent = dayNum;
-          cell.classList.add("adjacent-month"); // グレー表示
-          // 年月日を正しく設定
-          let pmYear  = prevMonthYear;
-          let pmMonth = prevMonth;
-          // 日付をYYYY-MM-DDに
-          const pmDateStr = pmYear + "-" +
-            String(pmMonth).padStart(2, "0") + "-" +
+          cell.classList.add("adjacent-month");
+          const pmDateStr = prevMonthYear + "-" +
+            String(prevMonth).padStart(2, "0") + "-" +
             String(dayNum).padStart(2, "0");
           cell.setAttribute("data-date", pmDateStr);
-
           cell.addEventListener("click", () => {
-            // 前月日付をエントリに
             if (currentEntry && currentEntry.date === pmDateStr) return;
             currentEntry = { date: pmDateStr, times: [] };
             appendNewEntry(currentEntry);
             highlightSelectedDate(cell);
           });
-
-        // 今月パート
         } else if (currentDay <= daysInMonth) {
           cell.textContent = currentDay;
           const formattedDate = year + "-" +
             String(month).padStart(2, "0") + "-" +
             String(currentDay).padStart(2, "0");
           cell.setAttribute("data-date", formattedDate);
-
           cell.addEventListener("click", () => {
-            // 今月日付をエントリに
             if (currentEntry && currentEntry.date === formattedDate) return;
             currentEntry = { date: formattedDate, times: [] };
             appendNewEntry(currentEntry);
             highlightSelectedDate(cell);
           });
           currentDay++;
-
-        // 翌月パート
         } else {
           cell.textContent = nextMonthDay;
-          cell.classList.add("adjacent-month"); // グレー表示
+          cell.classList.add("adjacent-month");
           const nmDateStr = nextMonthYear + "-" +
             String(nextMonth).padStart(2, "0") + "-" +
             String(nextMonthDay).padStart(2, "0");
           cell.setAttribute("data-date", nmDateStr);
-
           cell.addEventListener("click", () => {
-            // 翌月日付をエントリに
             if (currentEntry && currentEntry.date === nmDateStr) return;
             currentEntry = { date: nmDateStr, times: [] };
             appendNewEntry(currentEntry);
@@ -456,25 +425,22 @@
       }
       tbody.appendChild(tr);
     }
-    
     table.appendChild(tbody);
     calendarBody.appendChild(table);
 
-    // カレンダーと時刻セレクタの高さを合わせる
     adjustTimeSelectHeight();
   }
 
-  // 選択状態を反映してハイライト
+  // 選択状態の反映
   function highlightSelectedDate(selectedCell) {
     const allCells = calendarBody.querySelectorAll("td[data-date]");
     allCells.forEach(cell => cell.classList.remove("selected-date"));
     selectedCell.classList.add("selected-date");
   }
-
-  // カレンダーの高さを取得して、time-selectに適用
+  
+  // カレンダーの高さを取得して、時刻セレクタに適用
   function adjustTimeSelectHeight() {
     const calendarRect = calendarContainer.getBoundingClientRect();
-    // カレンダーコンテナ全体の高さをそのまま使用
     timeSelect.style.height = calendarRect.height + "px";
   }
   
@@ -506,12 +472,11 @@
       });
       timeSelect.appendChild(div);
     }
-    // 10:00 の位置までスクロール
     const tenOption = timeSelect.querySelector('[data-time="10:00"]');
     if (tenOption) timeSelect.scrollTop = tenOption.offsetTop;
   }
   
-  // 前月・翌月ボタンの動作
+  // 前月・翌月ボタンの処理
   prevMonthBtn.addEventListener("click", () => {
     currentYearMonth.setMonth(currentYearMonth.getMonth() - 1);
     updateMonthDisplay();
@@ -531,12 +496,11 @@
       .catch(err => { console.error("コピーに失敗:", err); });
   });
   
-  // RESET ボタン（ページリロードで初期化）
+  // RESET ボタン（ページリロード）
   document.getElementById("resetBtn").addEventListener("click", () => {
     window.location.reload();
   });
   
-  // ウィンドウリサイズ時にも時間セレクタの高さを再調整
   window.addEventListener('resize', () => {
     adjustTimeSelectHeight();
   });
