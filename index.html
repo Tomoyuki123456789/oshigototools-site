@@ -39,22 +39,23 @@
   </script>
   
   <style>
+    /* --- PC版用スタイル（モバイル以外） --- */
     body {
       font-family: sans-serif;
       margin: 20px;
     }
-    /* PC（モバイル以外）の場合の設定 */
+    /* カレンダー枠（PC版）：幅を拡大 */
     .calendar-container {
       border: 1px solid #ccc;
       padding: 10px;
       display: flex;
       flex-direction: column; /* 月選択とカレンダー本体を縦に並べる */
-      width: 370px; /* 以前の250pxから拡大 */
+      width: 370px; /* この幅はカレンダー部分 */
       box-sizing: border-box;
       position: relative;
     }
+    /* PC版：時刻セレクタの幅を半分に */
     .time-select {
-      /* PC版：幅を半分（120px）に */
       width: 120px;
       border: 1px solid #ccc;
       box-shadow:
@@ -63,30 +64,29 @@
       overflow-y: auto;
       box-sizing: border-box;
     }
-    
-    /* 共通 */
+    /* 共通コンテナ */
     .container {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
       margin: 20px 0;
-      align-items: flex-start; /* 時刻セレクタとカレンダーを上揃え */
+      align-items: flex-start; /* 上端に揃える */
     }
-    /* 月選択部分： 3要素を等間隔に並べる */
+    /* 月選択部分：3要素を等間隔に */
     .month-select {
       display: flex;
-      justify-content: space-between;  /* ＜  真ん中  ＞ */
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
     }
     .nav-btn {
-      width: 60px;       
+      width: 60px;
       height: 40px;
       font-size: 16px;
     }
     .month-display {
       height: 40px;
-      line-height: 40px; /* 縦中央揃え */
+      line-height: 40px;
       font-size: 16px;
       text-align: center;
       flex: 1;
@@ -96,6 +96,7 @@
     .calendar-container table {
       border-collapse: collapse;
       width: 100%;
+      box-sizing: border-box;
     }
     .calendar-container th,
     .calendar-container td {
@@ -115,11 +116,11 @@
     .selected-date {
       background-color: #a0e0ff !important;
     }
-    /* 前後の月の日付 */
+    /* 前後月の日付 */
     .adjacent-month {
       color: #999;
     }
-    /* 時刻選択 */
+    /* 時刻セレクタ内のオプション */
     .time-option {
       font-size: 14px;
       padding: 6px 0;
@@ -147,12 +148,23 @@
       cursor: pointer;
       padding: 8px 16px;
     }
-    textarea {
-      width: 100%;
+    /* 文字出力欄はPC版では出力範囲（カレンダー＋時刻セレクタ）に合わせる */
+    .result-area textarea {
       height: 120px;
       font-size: 14px;
       padding: 8px;
       box-sizing: border-box;
+    }
+    /* --- PC版用：出力欄とフッターの横幅を計算通りに設定 --- */
+    @media (min-width: 769px) {
+      .result-area textarea {
+        width: 510px;  /* 370 + 20 + 120 = 510px */
+      }
+      footer {
+        width: 510px;
+        margin: 20px auto;
+        text-align: center;
+      }
     }
     
     /* --- モバイル向けスタイル --- */
@@ -175,15 +187,17 @@
         gap: 10px;
         overflow-x: hidden;
       }
+      /* カレンダー枠はコンテナいっぱいにする（ボックスサイズも合わせる） */
       .calendar-container {
         width: calc(95vw - 90px - 10px);
         min-width: calc(95vw - 90px - 10px);
+        box-sizing: border-box; /* 追加：枠と中身の幅を一致させる */
       }
       .calendar-container table {
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
-        box-sizing: border-box;  /* 追加：中身の幅が枠と一致 */
+        box-sizing: border-box;
       }
       .calendar-container th,
       .calendar-container td {
@@ -193,6 +207,7 @@
         vertical-align: middle;
         white-space: nowrap;
       }
+      /* モバイル版：時刻セレクタの幅は従来通り（90px） */
       .time-select {
         width: 90px;
         min-width: 90px;
@@ -203,16 +218,17 @@
         text-align: center;
         white-space: nowrap;
       }
+      /* モバイル版：ボタンは横並びに */
+      .btn-area {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+      }
       textarea {
         font-size: 15px;
         padding: 10px;
         margin: 10px auto;
         display: block;
-      }
-      .btn-area {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
       }
       button {
         font-size: 16px;
@@ -242,13 +258,13 @@
 <div class="container">
   <!-- カレンダー表示部分 -->
   <div class="calendar-container" id="calendarContainer">
-    <!-- 月選択(＜ 中央 ＞) -->
+    <!-- 月選択（＜  中央  ＞） -->
     <div class="month-select">
       <button id="prevMonthBtn" class="nav-btn">&lt;</button>
       <span id="monthDisplay" class="month-display"></span>
       <button id="nextMonthBtn" class="nav-btn">&gt;</button>
     </div>
-    <!-- テーブル（カレンダー本体）をJSで生成 -->
+    <!-- カレンダー本体のテーブルをJSで生成 -->
     <div id="calendarBody"></div>
   </div>
 
@@ -256,7 +272,7 @@
   <div class="time-select" id="timeSelect"></div>
 </div>
 
-<!-- 出力エリア（編集可能）とボタン -->
+<!-- 出力欄（編集可能）とボタン -->
 <div class="result-area">
   <textarea id="resultText"></textarea>
   <div class="btn-area">
@@ -264,6 +280,11 @@
     <button id="resetBtn">RESET</button>
   </div>
 </div>
+
+<footer style="text-align: center; font-size: 14px; padding: 20px; color: #666;">
+  <a href="/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a> | 
+  <a href="/contact.html" target="_blank" rel="noopener" style="color: blue;">お問い合わせ</a>
+</footer>
 
 <script>
   // 現在作業中のエントリ（未確定のもの）
@@ -510,11 +531,6 @@
   generateCalendar(currentYearMonth);
   generateTimeOptions();
 </script>
-
-<footer style="text-align: center; font-size: 14px; padding: 20px; color: #666;">
-  <a href="/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a> | 
-  <a href="/contact.html" target="_blank" rel="noopener" style="color: blue;">お問い合わせ</a>
-</footer>
 
 </body>
 </html>
