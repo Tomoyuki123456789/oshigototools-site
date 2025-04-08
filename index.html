@@ -193,6 +193,11 @@
         border-collapse: collapse;
         box-sizing: border-box;
       }
+      /* ★ここで曜日セルの幅を必ず均等に割り付けるために追加 */
+      .calendar-container th,
+      .calendar-container td {
+        width: calc(100% / 7);
+      }
       .calendar-container th,
       .calendar-container td {
         font-size: 14px;
