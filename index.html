@@ -43,20 +43,48 @@
       font-family: sans-serif;
       margin: 20px;
     }
-    /* コンテナは左寄せに */
+    /* PC・デスクトップで左寄せ、モバイルも基本的に同じだが幅はメディアクエリで切り替え */
     .container {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
-      margin: 20px 0; /* 中央揃えはしていません */
+      margin: 20px 0;
+      align-items: flex-start; /* 時刻セレクタとカレンダーを上揃え */
     }
     /* カレンダー部分 */
     .calendar-container {
       border: 1px solid #ccc;
       padding: 10px;
+      display: flex;
+      flex-direction: column; /* 月選択とカレンダー本体を縦に並べる */
+      width: 250px; /* 必要に応じて変更 */
+      box-sizing: border-box;
+      position: relative;
     }
+    /* 月選択部分： 3要素を等間隔に並べる */
+    .month-select {
+      display: flex;
+      justify-content: space-between;  /* ＜  真ん中  ＞ */
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .nav-btn {
+      width: 60px;       /* ご要望の2倍幅など */
+      height: 40px;
+      font-size: 16px;
+    }
+    .month-display {
+      height: 40px;
+      line-height: 40px; /* 縦中央揃え */
+      font-size: 16px;
+      text-align: center;
+      flex: 1;           /* ボタンと一緒に両端に寄せるため */
+      margin: 0 8px;
+    }
+    /* カレンダー本体（テーブル） */
     .calendar-container table {
       border-collapse: collapse;
+      width: 100%;
     }
     .calendar-container th,
     .calendar-container td {
@@ -75,17 +103,19 @@
     .selected-date {
       background-color: #a0e0ff !important;
     }
+    /* 前後の月の日付 */
+    .adjacent-month {
+      color: #999; /* グレー表示 */
+    }
     /* 時刻選択部分 */
     .time-select {
-      height: 240px;
-      overflow-y: auto;
-      padding: 0;
+      /* heightはJSで動的に設定（カレンダーと同じ高さにする） */
       width: 240px;
       border: 1px solid #ccc;
       box-shadow:
-        inset 0 -6px 6px -6px rgba(0, 0, 0, 0.15),
-        inset 0 6px 6px -6px rgba(0, 0, 0, 0.15);
-      scroll-behavior: smooth;
+        inset 0 -6px 6px -6px rgba(0,0,0,0.15),
+        inset 0 6px 6px -6px rgba(0,0,0,0.15);
+      overflow-y: auto;
       box-sizing: border-box;
     }
     .time-option {
@@ -122,29 +152,6 @@
       padding: 8px;
       box-sizing: border-box;
     }
-    /* 月選択部分：＜と＞ボタンと月表示の設定 */
-    .month-select {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-    }
-    .month-select .nav-btn {
-      width: 60px;       /* 従来の2倍の横幅 */
-      height: 40px;
-      font-size: 16px;
-      margin: 0 4px;
-    }
-    /* 非選択用の月表示。＜＞ボタンと同じ高さに調整 */
-    .month-display {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
-      padding: 0 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      /* 背景色やその他のスタイルはお好みで */
-    }
     
     /* --- モバイル向けスタイル --- */
     @media (max-width: 768px) {
@@ -166,34 +173,10 @@
         gap: 10px;
         overflow-x: hidden;
       }
-      .time-select {
-        width: 90px;
-        min-width: 90px;
-        height: 240px;
-        overflow-y: auto;
-        padding: 0;
-        border: 1px solid #ccc;
-        box-shadow:
-          inset 0 -6px 6px -6px rgba(0,0,0,0.15),
-          inset 0 6px 6px -6px rgba(0,0,0,0.15);
-        scroll-behavior: smooth;
-        box-sizing: border-box;
-        flex: 0 0 auto;
-      }
       .calendar-container {
         width: calc(95vw - 90px - 10px);
         min-width: calc(95vw - 90px - 10px);
-        height: 240px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 0;
-        border: 1px solid #ccc;
-        box-shadow:
-          inset 0 -6px 6px -6px rgba(0,0,0,0.15),
-          inset 0 6px 6px -6px rgba(0,0,0,0.15);
-        scroll-behavior: smooth;
-        box-sizing: border-box;
-        flex: 0 0 auto;
+        /* こちらも高さをJSで合わせる */
       }
       .calendar-container table {
         width: 100%;
@@ -209,6 +192,11 @@
         overflow: hidden;
         white-space: nowrap;
         box-sizing: border-box;
+      }
+      .time-select {
+        width: 90px;
+        min-width: 90px;
+        /* 同じくJSで高さをあわせる */
       }
       .time-option {
         font-size: 14px;
@@ -237,9 +225,6 @@
         width: 100%;
         max-width: 300px;
       }
-      .month-select {
-        font-size: 15px;
-      }
     }
   </style>
   
@@ -260,16 +245,19 @@
 
 <h1>カレンダー時刻選択ツール</h1>
 
-<!-- 月選択エリア：＜と＞ボタンと月の表示 -->
-<div class="month-select">
-  <button id="prevMonthBtn" class="nav-btn">&lt;</button>
-  <span id="monthDisplay" class="month-display"></span>
-  <button id="nextMonthBtn" class="nav-btn">&gt;</button>
-</div>
-
 <div class="container">
   <!-- カレンダー表示部分 -->
-  <div class="calendar-container" id="calendarContainer"></div>
+  <div class="calendar-container" id="calendarContainer">
+    <!-- 月選択(＜ 中央 ＞) -->
+    <div class="month-select">
+      <button id="prevMonthBtn" class="nav-btn">&lt;</button>
+      <span id="monthDisplay" class="month-display"></span>
+      <button id="nextMonthBtn" class="nav-btn">&gt;</button>
+    </div>
+    <!-- テーブル（カレンダー本体）をJSで生成 -->
+    <div id="calendarBody"></div>
+  </div>
+
   <!-- 時刻選択表示部分 -->
   <div class="time-select" id="timeSelect"></div>
 </div>
@@ -288,25 +276,27 @@
   let currentEntry = null;
   
   const resultText = document.getElementById("resultText");
-  const calendarContainer = document.getElementById("calendarContainer");
   const timeSelect = document.getElementById("timeSelect");
   const prevMonthBtn = document.getElementById("prevMonthBtn");
   const nextMonthBtn = document.getElementById("nextMonthBtn");
   const monthDisplay = document.getElementById("monthDisplay");
+  const calendarBody = document.getElementById("calendarBody"); // テーブルを入れるコンテナ
+  const calendarContainer = document.getElementById("calendarContainer"); // カレンダー全体
 
   // 曜日配列
   const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
   
-  // 現在の表示する月（Dateオブジェクト。必ず1日をセット）
+  // 現在の表示月 (必ず1日を指すDateオブジェクト)
   let currentYearMonth = new Date();
   currentYearMonth.setDate(1);
   
-  // 月表示の更新
+  // 月表示を更新
   function updateMonthDisplay() {
-    monthDisplay.textContent = currentYearMonth.getFullYear() + "年" + (currentYearMonth.getMonth() + 1) + "月";
+    monthDisplay.textContent = 
+      currentYearMonth.getFullYear() + "年" + (currentYearMonth.getMonth() + 1) + "月";
   }
   
-  // 選択されたエントリを「4月9日(水) 13:00～14:30 ...」形式に変換
+  // エントリ内容を「M月D日(曜) HH:MM～HH:MM ...」形式に整形
   function formatEntry(entry) {
     let line = "";
     if (entry.date) {
@@ -325,23 +315,23 @@
     return line;
   }
   
-  // "YYYY-MM-DD"を「M月D日(曜)」形式に変換
+  // "YYYY-MM-DD" → 「M月D日(曜)」
   function formatDateWithWeekday(dateStr) {
     const dateObj = new Date(dateStr);
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    const weekday = weekdays[dateObj.getDay()];
-    return month + "月" + day + "日(" + weekday + ")";
+    const wday = weekdays[dateObj.getDay()];
+    return month + "月" + day + "日(" + wday + ")";
   }
   
-  // 出力欄の最終行を更新
+  // 出力欄の最終行を作業中エントリに置き換え
   function updateCurrentEntryLine() {
     const lines = resultText.value.split("\n");
     lines[lines.length - 1] = formatEntry(currentEntry);
     resultText.value = lines.join("\n");
   }
   
-  // 新規日付選択時、出力欄の末尾に追加
+  // 新規日付クリック時、出力欄の末尾に追加
   function appendNewEntry(entry) {
     const newLine = formatEntry(entry);
     if (resultText.value.trim() === "") {
@@ -351,14 +341,34 @@
     }
   }
   
-  // 選択された月のカレンダーを生成（引数はDateオブジェクト）
+  // カレンダーを生成する
   function generateCalendar(dateObj) {
-    calendarContainer.innerHTML = "";
+    calendarBody.innerHTML = "";
+    
     const year = dateObj.getFullYear();
     const month = dateObj.getMonth() + 1; // 1～12
+    // 今月の1日
+    const firstDay = new Date(year, month - 1, 1);
+    // 今月の最終日
+    const daysInMonth = new Date(year, month, 0).getDate();
+    // 1日の曜日 (0=日,1=月,...,6=土)
+    const startDay = firstDay.getDay();
+
+    // 前月の最終日
+    // JSで (month-1, 0) とすると当月から見た月初の1日前=前月の最終日
+    const prevMonthLastDate = new Date(year, month - 1, 0).getDate();
+    // 前月・翌月の年と月を計算
+    // monthが1(1月)のときは 前月=12月, year-1
+    // monthが12(12月)のときは 翌月=1月, year+1
+    const prevMonthYear = (month === 1) ? (year - 1) : year;
+    const prevMonth     = (month === 1) ? 12 : (month - 1);
+    const nextMonthYear = (month === 12) ? (year + 1) : year;
+    const nextMonth     = (month === 12) ? 1  : (month + 1);
+
+    // テーブル要素
     const table = document.createElement("table");
     
-    // ヘッダー（曜日）
+    // thead
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
     weekdays.forEach(day => {
@@ -369,46 +379,103 @@
     thead.appendChild(headerRow);
     table.appendChild(thead);
     
-    // 本体
+    // tbody
     const tbody = document.createElement("tbody");
-    const firstDay = new Date(year, month - 1, 1);
-    const startDay = firstDay.getDay();
-    const daysInMonth = new Date(year, month, 0).getDate();
-    let row = document.createElement("tr");
+    // 6行×7列 = 42セル でカレンダー表示（最大でも6週あれば足りる）
+    let cellCount = 0;
+    let currentDay = 1;     // 今月の日付をカウント
+    let nextMonthDay = 1;   // 次月の日付をカウント
     
-    // 空セルの作成
-    for (let i = 0; i < startDay; i++) {
-      const cell = document.createElement("td");
-      row.appendChild(cell);
-    }
-    // 日付セルの作成
-    for (let day = 1; day <= daysInMonth; day++) {
-      if ((startDay + day - 1) % 7 === 0 && day !== 1) {
-        tbody.appendChild(row);
-        row = document.createElement("tr");
+    for (let row = 0; row < 6; row++) {
+      const tr = document.createElement("tr");
+      
+      for (let col = 0; col < 7; col++) {
+        const cell = document.createElement("td");
+        cellCount++;
+
+        // 前月パート
+        if (cellCount <= startDay) {
+          // 前月の終わりの日付を逆算
+          const dayNum = prevMonthLastDate - (startDay - cellCount);
+          cell.textContent = dayNum;
+          cell.classList.add("adjacent-month"); // グレー表示
+          // 年月日を正しく設定
+          let pmYear  = prevMonthYear;
+          let pmMonth = prevMonth;
+          // 日付をYYYY-MM-DDに
+          const pmDateStr = pmYear + "-" +
+            String(pmMonth).padStart(2, "0") + "-" +
+            String(dayNum).padStart(2, "0");
+          cell.setAttribute("data-date", pmDateStr);
+
+          cell.addEventListener("click", () => {
+            // 前月日付をエントリに
+            if (currentEntry && currentEntry.date === pmDateStr) return;
+            currentEntry = { date: pmDateStr, times: [] };
+            appendNewEntry(currentEntry);
+            highlightSelectedDate(cell);
+          });
+
+        // 今月パート
+        } else if (currentDay <= daysInMonth) {
+          cell.textContent = currentDay;
+          const formattedDate = year + "-" +
+            String(month).padStart(2, "0") + "-" +
+            String(currentDay).padStart(2, "0");
+          cell.setAttribute("data-date", formattedDate);
+
+          cell.addEventListener("click", () => {
+            // 今月日付をエントリに
+            if (currentEntry && currentEntry.date === formattedDate) return;
+            currentEntry = { date: formattedDate, times: [] };
+            appendNewEntry(currentEntry);
+            highlightSelectedDate(cell);
+          });
+          currentDay++;
+
+        // 翌月パート
+        } else {
+          cell.textContent = nextMonthDay;
+          cell.classList.add("adjacent-month"); // グレー表示
+          const nmDateStr = nextMonthYear + "-" +
+            String(nextMonth).padStart(2, "0") + "-" +
+            String(nextMonthDay).padStart(2, "0");
+          cell.setAttribute("data-date", nmDateStr);
+
+          cell.addEventListener("click", () => {
+            // 翌月日付をエントリに
+            if (currentEntry && currentEntry.date === nmDateStr) return;
+            currentEntry = { date: nmDateStr, times: [] };
+            appendNewEntry(currentEntry);
+            highlightSelectedDate(cell);
+          });
+          nextMonthDay++;
+        }
+        
+        tr.appendChild(cell);
       }
-      const cell = document.createElement("td");
-      cell.textContent = day;
-      const formattedDate = year + "-" + String(month).padStart(2, "0") + "-" + String(day).padStart(2, "0");
-      cell.setAttribute("data-date", formattedDate);
-      cell.addEventListener("click", () => {
-        if (currentEntry && currentEntry.date === formattedDate) return;
-        currentEntry = { date: formattedDate, times: [] };
-        appendNewEntry(currentEntry);
-        const cells = calendarContainer.querySelectorAll("td[data-date]");
-        cells.forEach(c => c.classList.remove("selected-date"));
-        cell.classList.add("selected-date");
-      });
-      row.appendChild(cell);
+      tbody.appendChild(tr);
     }
-    // 足りないセルを補完
-    while (row.children.length < 7) {
-      const cell = document.createElement("td");
-      row.appendChild(cell);
-    }
-    tbody.appendChild(row);
+    
     table.appendChild(tbody);
-    calendarContainer.appendChild(table);
+    calendarBody.appendChild(table);
+
+    // カレンダーと時刻セレクタの高さを合わせる
+    adjustTimeSelectHeight();
+  }
+
+  // 選択状態を反映してハイライト
+  function highlightSelectedDate(selectedCell) {
+    const allCells = calendarBody.querySelectorAll("td[data-date]");
+    allCells.forEach(cell => cell.classList.remove("selected-date"));
+    selectedCell.classList.add("selected-date");
+  }
+
+  // カレンダーの高さを取得して、time-selectに適用
+  function adjustTimeSelectHeight() {
+    const calendarRect = calendarContainer.getBoundingClientRect();
+    // カレンダーコンテナ全体の高さをそのまま使用
+    timeSelect.style.height = calendarRect.height + "px";
   }
   
   // 00:00～24:00の時刻オプションを30分刻みで生成
@@ -467,6 +534,11 @@
   // RESET ボタン（ページリロードで初期化）
   document.getElementById("resetBtn").addEventListener("click", () => {
     window.location.reload();
+  });
+  
+  // ウィンドウリサイズ時にも時間セレクタの高さを再調整
+  window.addEventListener('resize', () => {
+    adjustTimeSelectHeight();
   });
   
   // 初期表示
