@@ -148,14 +148,7 @@
       cursor: pointer;
       padding: 8px 16px;
     }
-    /* 文字出力欄はPC版では出力範囲（カレンダー＋時刻セレクタ）に合わせる */
-    .result-area textarea {
-      height: 120px;
-      font-size: 14px;
-      padding: 8px;
-      box-sizing: border-box;
-    }
-    /* --- PC版用：出力欄とフッターの横幅を計算通りに設定 --- */
+    /* --- PC版用：出力欄とフッターの横幅を固定 --- */
     @media (min-width: 769px) {
       .result-area textarea {
         width: 510px;  /* 370 + 20 + 120 = 510px */
@@ -187,11 +180,11 @@
         gap: 10px;
         overflow-x: hidden;
       }
-      /* カレンダー枠はコンテナいっぱいにする（ボックスサイズも合わせる） */
+      /* カレンダー枠はコンテナいっぱいにする */
       .calendar-container {
         width: calc(95vw - 90px - 10px);
         min-width: calc(95vw - 90px - 10px);
-        box-sizing: border-box; /* 追加：枠と中身の幅を一致させる */
+        box-sizing: border-box; /* 枠と中身の幅を一致 */
       }
       .calendar-container table {
         width: 100%;
@@ -207,7 +200,7 @@
         vertical-align: middle;
         white-space: nowrap;
       }
-      /* モバイル版：時刻セレクタの幅は従来通り（90px） */
+      /* モバイル版：時刻セレクタの幅は従来通り */
       .time-select {
         width: 90px;
         min-width: 90px;
@@ -218,11 +211,15 @@
         text-align: center;
         white-space: nowrap;
       }
-      /* モバイル版：ボタンは横並びに */
+      /* モバイル版：ボタンを横並びに */
       .btn-area {
         flex-direction: row;
         justify-content: center;
         gap: 10px;
+      }
+      /* 【追加修正】モバイル版でも出力欄の横幅を、カレンダー枠左端～時刻セレクタ右端（＝95vw）に */
+      .result-area textarea {
+         width: 95vw;
       }
       textarea {
         font-size: 15px;
