@@ -152,6 +152,7 @@
     @media (min-width: 769px) {
       .result-area textarea {
         width: 510px;  /* 370 + 20 + 120 = 510px */
+        height: 300px;
       }
       footer {
         width: 510px;
@@ -217,9 +218,10 @@
         justify-content: center;
         gap: 10px;
       }
-      /* 【追加修正】モバイル版でも出力欄の横幅を、カレンダー枠左端～時刻セレクタ右端（＝95vw）に */
+      /* モバイル版でも出力欄の横幅を、カレンダー枠左端～時刻セレクタ右端（＝95vw）に */
       .result-area textarea {
-         width: 95vw;
+         width: 90vw;
+         height: 300px;
       }
       textarea {
         font-size: 15px;
