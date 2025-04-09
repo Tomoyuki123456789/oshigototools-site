@@ -335,22 +335,25 @@
   
   // エントリ内容を「M月D日(曜) HH:MM～HH:MM ...」形式に整形
   function formatEntry(entry) {
-    let line = "";
-    if (entry.date) {
-      line += formatDateWithWeekday(entry.date);
-    }
-    if (entry.times && entry.times.length > 0) {
-      entry.times.forEach(range => {
-        if (range.start) {
-          line += " " + range.start;
-          if (range.end) {
-            line += "～" + range.end;
-          }
-        }
-      });
-    }
-    return line;
+  let line = "";
+  if (entry.date) {
+    line += formatDateWithWeekday(entry.date);
   }
+  if (entry.times && entry.times.length > 0) {
+    const formattedTimes = entry.times.map(range => {
+      let timeStr = "";
+      if (range.start) {
+        timeStr = range.start;
+        if (range.end) {
+          timeStr += "～" + range.end;
+        }
+      }
+      return timeStr;
+    });
+    line += " " + formattedTimes.join("、");
+  }
+  return line;
+}
   
   // "YYYY-MM-DD" → 「M月D日(曜)」
   function formatDateWithWeekday(dateStr) {
