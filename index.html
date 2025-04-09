@@ -120,6 +120,16 @@
     .adjacent-month {
       color: #999;
     }
+    /* ▼ 追加：本日・土曜・日曜用の背景色設定 ▼ */
+    .today {
+      background-color: #eee !important;
+    }
+    .saturday {
+      background-color: #e0f7ff;
+    }
+    .sunday {
+      background-color: #ffe0e0;
+    }
     /* 時刻セレクタ内のオプション */
     .time-option {
       font-size: 14px;
@@ -305,6 +315,12 @@
   // 曜日配列
   const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
   
+  // 今日の日付（年月日だけ）
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth();
+  const todayDate = today.getDate();
+  
   // 現在の表示月 (必ず1日を指すDateオブジェクト)
   let currentYearMonth = new Date();
   currentYearMonth.setDate(1);
@@ -444,6 +460,20 @@
             highlightSelectedDate(cell);
           });
           nextMonthDay++;
+        }
+        
+        // ★ 列に応じた背景色設定
+        if (col === 0) {
+          cell.classList.add("sunday");
+        } else if (col === 6) {
+          cell.classList.add("saturday");
+        }
+        // 本日の日付の場合は、背景を薄いグレーにする
+        const cellDate = new Date(cell.getAttribute("data-date"));
+        if (cellDate.getFullYear() === todayYear &&
+            cellDate.getMonth() === todayMonth &&
+            cellDate.getDate() === todayDate) {
+          cell.classList.add("today");
         }
         
         tr.appendChild(cell);
