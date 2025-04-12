@@ -71,19 +71,18 @@ footer a {
 /* 既存の共通スタイルはそのまま残し、下記を追加 */
 
 @media (max-width: 768px) {
-  /* ヘッダー */
-  header {
-    margin-bottom: 20px;    /* 例：余白を少し削減 */
-  }
-  header h1 {
-    font-size: 20px;        /* 例：ヘッダータイトルを少し小さめに */
-    margin-bottom: 10px;    /* 余白も最小限に */
-  }
-
-  /* フッター */
   footer {
-    padding: 8px;           /* 例：全体の内側余白を少なめに */
-    margin-top: 20px;       /* 例：上の要素との余白を削減 */
-    font-size: 12px;        /* 例：文字サイズを小さく */
+    /* フォントサイズを少し小さめに */
+    font-size: 12px;
+    /* 行間を詰めると高さが抑えられる */
+    line-height: 1.2;
+    /* 内側のパディングを減らす */
+    padding: 5px 10px;
+    /* 上との余白を小さくする */
+    margin-top: 10px;
+  }
+  /* 各リンクの間隔も詰める */
+  footer a {
+    margin: 0 4px;
   }
 }
