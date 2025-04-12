@@ -39,9 +39,7 @@
   </script>
   
   <!-- Google Adsense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857"
-          crossorigin="anonymous"></script>
-  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857" crossorigin="anonymous"></script>
   <!-- Google Tag Manager / Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WSSYVFF7J"></script>
   <script>
@@ -51,85 +49,51 @@
     gtag('config', 'G-9WSSYVFF7J');
   </script>
   
+  <!-- 共通スタイル -->
+  <link rel="stylesheet" href="/css/common.css">
+  
+  <!-- ページ固有スタイル -->
   <style>
-    body {
-      font-family: sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: #fff;
-      color: #333;
-      line-height: 1.8;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-    .intro {
-      background: #f9f9f9;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-    .intro h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-    .intro p {
-      margin: 8px 0;
-      font-size: 16px;
-    }
     .tool-list {
       list-style: none;
       padding: 0;
       margin: 0;
     }
+    
     .tool-list li {
-      margin: 16px 0;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #ddd;
-    }
-    .tool-list li a {
-      text-decoration: none;
-      font-size: 20px;
-      color: #007BFF;
-    }
-    .tool-list li a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 14px;
-      color: #666;
+      margin: var(--space-sm) 0;
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--border-color);
+      transition: transform 0.2s;
     }
     
-    @media (max-width: 768px) {
-      body {
-        margin: 10px;
-        font-size: 16px;
-      }
-      h1 {
-        font-size: 22px;
-      }
-      .tool-list li a {
-        font-size: 18px;
-      }
+    .tool-list li:hover {
+      transform: translateX(5px);
+    }
+    
+    .tool-list li a {
+      display: block;
+      font-size: var(--fs-lg);
+      padding: var(--space-xs) 0;
+      color: var(--primary-color);
+    }
+    
+    .intro {
+      background: #f9f9f9;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>oshigototools</h1>
+    <h1 class="site-title">oshigototools</h1>
   </header>
   
-  <!-- 簡潔なご挨拶セクション -->
+  <!-- ご挨拶セクション -->
   <div class="intro">
     <h2>ようこそ</h2>
     <p>
@@ -142,14 +106,15 @@
     <h2>ツール一覧</h2>
     <ul class="tool-list">
       <li><a href="tools/calendar.html">カレンダー時刻選択ツール</a></li>
-      <!-- 他のツールへのリンクを必要に応じて追加 -->
+      <!-- 必要に応じてその他のリンク -->
     </ul>
   </main>
   
   <footer>
-    <a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a> | 
-    <a href="contact.html" target="_blank" rel="noopener">お問い合わせ</a> | 
-    <a href="greeting.html" target="_blank" rel="noopener">ご挨拶</a>
+    <a href="index.html">ホーム</a> | 
+    <a href="privacy.html">プライバシーポリシー</a> | 
+    <a href="contact.html">お問い合わせ</a> | 
+    <a href="greeting.html">ご挨拶</a>
   </footer>
   
 </body>

@@ -12,7 +12,7 @@
   
   <!-- Open Graph Tags -->
   <meta property="og:title" content="ご挨拶 - oshigototools">
-  <meta property="og:description" content="oshigototoolsは、実務で日常的に使える便利でシンプルなツールを多数開発し、生産性向上をサポートします。">
+  <meta property="og:description" content="oshigototoolsは、実務で使える便利でシンプルなツールを多数開発し、生産性向上をサポートします。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://example.com/greeting.html">
   <meta property="og:image" content="http://example.com/og-image.jpg">
@@ -36,8 +36,7 @@
   <!-- Google Adsense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857"
   crossorigin="anonymous"></script>
-  
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Tag Manager / Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WSSYVFF7J"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -46,46 +45,16 @@
     gtag('config', 'G-9WSSYVFF7J');
   </script>
   
+  <!-- 共通スタイル -->
+  <link rel="stylesheet" href="/css/common.css">
+  
+  <!-- ページ固有スタイル -->
   <style>
-    body {
-      font-family: sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background-color: #fff;
-      line-height: 1.8;
-    }
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    a {
-      color: blue;
-      text-decoration: none;
-    }
     .container {
       padding: 20px;
       background: #f9f9f9;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    /* フッター：先ほどと同じ位置調整 */
-    footer {
-      text-align: center;
-      font-size: 14px;
-      padding: 20px;
-      color: #666;
-      margin-top: 40px;
-    }
-    footer a {
-      color: blue;
-      text-decoration: none;
-      margin: 0 8px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
     }
   </style>
 </head>
