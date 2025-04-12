@@ -68,12 +68,14 @@ footer a {
   margin: 0 8px;
 }
 
+/* 既存の共通スタイルはそのまま残し、下記を追加 */
+
 @media (max-width: 768px) {
-  body {
-    margin: 10px;
-    font-size: 16px;
-  }
-  h1 {
-    font-size: var(--h1-size-sm);
+  /* フッターの余白とフォントサイズの縮小 */
+  footer {
+    padding: 10px;      /* 例えば従来の20pxから10pxに */
+    margin-top: 20px;    /* 上部余白も少し縮小 */
+    font-size: 12px;     /* フォントサイズを少し小さめに */
   }
 }
+
