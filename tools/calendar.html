@@ -5,19 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>カレンダー時刻選択ツール</title>
   
-  <!-- Meta Tags / Open Graph / JSON-LD 等（省略） -->
-  
+  <!-- Meta Tags / Open Graph / JSON-LD 等は省略 -->
+
   <!-- 共通スタイル -->
   <link rel="stylesheet" href="/css/common.css">
   
   <!-- ページ固有スタイル -->
   <style>
+    /* PC・タブレット共通（769px以上）のスタイル */
+    .container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px auto; /* 縦方向の余白は既存の20px、左右はautoで中央寄せ */
+      align-items: flex-start;
+      justify-content: center; /* これでコンテンツを中央寄せ */
+    }
     .calendar-container {
       border: 1px solid var(--border-color);
       padding: 10px;
       display: flex;
       flex-direction: column;
-      width: 370px;
+      width: 370px; /* カレンダー部分は従来通り */
       position: relative;
     }
     .time-select {
@@ -27,13 +36,6 @@
         inset 0 -6px 6px -6px rgba(0,0,0,0.15),
         inset 0 6px 6px -6px rgba(0,0,0,0.15);
       overflow-y: auto;
-    }
-    .container {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin: 20px 0;
-      align-items: flex-start;
     }
     .month-select {
       display: flex;
@@ -101,6 +103,11 @@
     }
     .result-area {
       margin-top: 10px;
+      /* もし結果欄自体も中央寄せしたければ以下を追加
+         margin-left: auto;
+         margin-right: auto;
+         text-align: center;
+      */
     }
     .btn-area {
       margin-top: 10px;
@@ -111,9 +118,11 @@
       cursor: pointer;
       padding: 8px 16px;
     }
+
+    /* PC版テキストエリア大きめ */
     @media (min-width: 769px) {
       .result-area textarea {
-        width: 510px;
+        width: 510px; 
         height: 150px;
       }
       footer {
@@ -122,18 +131,23 @@
         text-align: center;
       }
     }
+
+    /* スマホ（768px以下）向け調整 */
     @media (max-width: 768px) {
       .container {
+        /* 既存ロジックを継承しつつ微調整 */
         width: 95vw;
         margin: 0 auto;
         display: flex;
         flex-direction: row;
         gap: 10px;
         overflow-x: hidden;
+        justify-content: center; /* できるだけ中央寄せ */
       }
       .calendar-container {
-        width: calc(95vw - 90px - 10px);
-        min-width: calc(95vw - 90px - 10px);
+        /* 本来は calc(95vw - 90px - 10px) でしたが、ややはみ出す場合があるため微減 */
+        width: calc(95vw - 90px - 15px);
+        min-width: calc(95vw - 90px - 15px);
       }
       .calendar-container table {
         width: 100%;
@@ -186,6 +200,7 @@
   </h1>
 </header>
 
+<!-- カレンダー & 時刻セレクタ部分 -->
 <div class="container">
   <div class="calendar-container" id="calendarContainer">
     <div class="month-select">
@@ -199,6 +214,7 @@
   <div class="time-select" id="timeSelect"></div>
 </div>
 
+<!-- 選択結果表示エリア -->
 <div class="result-area">
   <textarea id="resultText"></textarea>
   <div class="btn-area">
@@ -214,10 +230,10 @@
   <a href="/greeting.html">ご挨拶</a>
 </footer>
 
-<!-- ※ 右下のホーム行きボタンは削除済み -->
-
 <script>
-  // カレンダーと時刻セレクタの JavaScript コード（機能は従来通り）
+  // -------------------------
+  //   カレンダーJSロジック
+  // -------------------------
   let currentEntry = null;
   const resultText = document.getElementById("resultText");
   const timeSelect = document.getElementById("timeSelect");
@@ -293,11 +309,12 @@
     const daysInMonth = new Date(year, month, 0).getDate();
     const startDay = firstDay.getDay();
 
+    // 前月の末日
     const prevMonthLastDate = new Date(year, month - 1, 0).getDate();
     const prevMonthYear = (month === 1) ? (year - 1) : year;
-    const prevMonth = (month === 1) ? 12 : (month - 1);
+    const prevMonthNum  = (month === 1) ? 12 : (month - 1);
     const nextMonthYear = (month === 12) ? (year + 1) : year;
-    const nextMonth = (month === 12) ? 1 : (month + 1);
+    const nextMonthNum  = (month === 12) ? 1  : (month + 1);
 
     const table = document.createElement("table");
     
@@ -321,12 +338,14 @@
       for (let col = 0; col < 7; col++) {
         const cell = document.createElement("td");
         cellCount++;
+
         if (cellCount <= startDay) {
+          // 前月
           const dayNum = prevMonthLastDate - (startDay - cellCount);
           cell.textContent = dayNum;
           cell.classList.add("adjacent-month");
           const pmDateStr = prevMonthYear + "-" +
-            String(prevMonth).padStart(2, "0") + "-" +
+            String(prevMonthNum).padStart(2, "0") + "-" +
             String(dayNum).padStart(2, "0");
           cell.setAttribute("data-date", pmDateStr);
           cell.addEventListener("click", () => {
@@ -336,6 +355,7 @@
             highlightSelectedDate(cell);
           });
         } else if (currentDay <= daysInMonth) {
+          // 当月
           cell.textContent = currentDay;
           const formattedDate = year + "-" +
             String(month).padStart(2, "0") + "-" +
@@ -349,10 +369,11 @@
           });
           currentDay++;
         } else {
+          // 次月
           cell.textContent = nextMonthDay;
           cell.classList.add("adjacent-month");
           const nmDateStr = nextMonthYear + "-" +
-            String(nextMonth).padStart(2, "0") + "-" +
+            String(nextMonthNum).padStart(2, "0") + "-" +
             String(nextMonthDay).padStart(2, "0");
           cell.setAttribute("data-date", nmDateStr);
           cell.addEventListener("click", () => {
@@ -364,6 +385,7 @@
           nextMonthDay++;
         }
         
+        // 曜日の色付けや "today" の判定
         if (col === 0) {
           cell.classList.add("sunday");
         } else if (col === 6) {
@@ -414,6 +436,7 @@
         }
         if (!currentEntry.times) currentEntry.times = [];
         const times = currentEntry.times;
+        // 時刻の開始～終了の範囲選択ロジック
         if (times.length === 0 || (times[times.length - 1].start && times[times.length - 1].end)) {
           times.push({ start: timeStr, end: "" });
         } else if (times[times.length - 1].start && !times[times.length - 1].end) {
@@ -423,36 +446,41 @@
       });
       timeSelect.appendChild(div);
     }
+    // 10:00 付近へ自動スクロールさせる例
     const tenOption = timeSelect.querySelector('[data-time="10:00"]');
     if (tenOption) tenOption.scrollIntoView();
   }
   
+  // 前月・次月ボタン
   prevMonthBtn.addEventListener("click", () => {
     currentYearMonth.setMonth(currentYearMonth.getMonth() - 1);
     updateMonthDisplay();
     generateCalendar(currentYearMonth);
   });
-  
   nextMonthBtn.addEventListener("click", () => {
     currentYearMonth.setMonth(currentYearMonth.getMonth() + 1);
     updateMonthDisplay();
     generateCalendar(currentYearMonth);
   });
   
+  // COPYボタン
   document.getElementById("copyBtn").addEventListener("click", () => {
     navigator.clipboard.writeText(resultText.value)
       .then(() => { alert("コピーしました！"); })
       .catch(err => { console.error("コピーに失敗:", err); });
   });
   
+  // RESETボタン（ページ再読込）
   document.getElementById("resetBtn").addEventListener("click", () => {
     window.location.reload();
   });
   
+  // ウィンドウリサイズ時、時刻選択の高さを再調整
   window.addEventListener('resize', () => {
     adjustTimeSelectHeight();
   });
   
+  // 初期表示
   updateMonthDisplay();
   generateCalendar(currentYearMonth);
   generateTimeOptions();
