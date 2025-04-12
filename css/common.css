@@ -68,22 +68,33 @@ footer a {
   margin: 0 8px;
 }
 
-/* 既存の共通スタイルはそのまま残し、下記を追加 */
-
 @media (max-width: 768px) {
-  /* ヘッダー */
-  header {
-    margin-bottom: 20px;    /* 例：余白を少し削減 */
-  }
-  header h1 {
-    font-size: 20px;        /* 例：ヘッダータイトルを少し小さめに */
-    margin-bottom: 10px;    /* 余白も最小限に */
-  }
-
-  /* フッター */
   footer {
-    padding: 8px;           /* 例：全体の内側余白を少なめに */
-    margin-top: 20px;       /* 例：上の要素との余白を削減 */
-    font-size: 12px;        /* 例：文字サイズを小さく */
+    padding: 5px 10px;     /* 内側余白をコンパクトに */
+    margin-top: 10px;      /* 上部余白も少なめに */
+    font-size: 12px;       /* 文字サイズを小さく */
+    line-height: 1.2;      /* 行間を詰める */
+    background-color: #fff; /* 背景色を揃える場合 */
+  }
+  /* フッター内のリストをflexでレイアウト */
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  /* 各リスト項目の設定 */
+  .footer-links li {
+    /* 横幅は2列になるように（4リンクの場合） */
+    flex: 1 1 45%;
+    margin: 4px 2%;
+    text-align: center;
+  }
+  /* リンクそのもののスタイル（必要に応じて） */
+  .footer-links li a {
+    text-decoration: none;
+    color: var(--link-color);
   }
 }
