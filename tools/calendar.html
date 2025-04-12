@@ -5,46 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>カレンダー時刻選択ツール</title>
   
-  <!-- Meta Tags -->
-  <meta name="description" content="カレンダー時刻選択ツール - 日程調整に便利です。">
-  <meta name="keywords" content="カレンダー, 時刻選択, 問い合わせ">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Open Graph Tags -->
-  <meta property="og:title" content="カレンダー時刻選択ツール">
-  <meta property="og:description" content="カレンダー時刻選択ツールで時間を選び、効率的なスケジュール管理をサポート。">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="http://example.com/">
-  <meta property="og:image" content="http://example.com/og-image.jpg">
-  
-  <!-- Structured Data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "カレンダー時刻選択ツール",
-    "url": "http://example.com/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "http://example.com/?s={search_term_string}",
-      "query-input": "required name=search_term_string"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+81-XX-XXXX-XXXX",
-      "contactType": "customer service",
-      "email": "contact@example.com"
-    }
-  }
-  </script>
+  <!-- Meta Tags / Open Graph / JSON-LD 等（省略） -->
   
   <!-- 共通スタイル -->
   <link rel="stylesheet" href="/css/common.css">
   
+  <!-- ページ固有スタイル -->
   <style>
-    /* カレンダー固有のスタイル */
-    /* ※bodyのfont-familyや余白はcommon.cssに任せるため削除 */
-    
     .calendar-container {
       border: 1px solid var(--border-color);
       padding: 10px;
@@ -206,57 +173,13 @@
         max-width: 300px;
       }
     }
-    .toTop-nav {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      display: flex;
-      padding: 0;
-      margin: 0;
-      z-index: 999;
-    }
-    .toTop-nav li {
-      list-style-type: none;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 50px;
-      text-align: center;
-      margin-left: 10px;
-    }
-    .toTop-nav li a {
-      display: block;
-      width: 50px;
-      height: 50px;
-      font-size: 30px;
-      line-height: 50px;
-      color: #fff;
-      text-decoration: none;
-    }
-    .toTop-nav li a:visited,
-    .toTop-nav li a:hover,
-    .toTop-nav li a:active,
-    .toTop-nav li a:focus {
-      color: #fff;
-    }
   </style>
-  
-  <!-- Google Adsense (再掲: ページ冒頭と重複する場合は1回で問題ありません) -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1022064127594857" crossorigin="anonymous"></script>
-  
-  <!-- Google Tag Manager / Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WSSYVFF7J"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9WSSYVFF7J');
-  </script>
 </head>
 <body>
 
-<!-- ヘッダー（共通のスタイルに任せ、インラインスタイルは除去） -->
 <header>
   <h1>
-    <a href="/index.html">
+    <a href="/index.html" style="text-decoration: none; color: inherit;">
       <img src="/ifn0402.svg" alt="ホーム" style="vertical-align: middle; height: 1em; margin-right: 0.5em;">
       カレンダー時刻選択ツール
     </a>
@@ -285,18 +208,16 @@
 </div>
 
 <footer>
-  <a href="/index.html" target="_blank" rel="noopener">ホーム</a> | 
-  <a href="/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a> | 
-  <a href="/contact.html" target="_blank" rel="noopener">お問い合わせ</a> | 
-  <a href="/greeting.html" target="_blank" rel="noopener">ご挨拶</a>
+  <a href="/index.html">ホーム</a> |
+  <a href="/privacy.html">プライバシーポリシー</a> |
+  <a href="/contact.html">お問い合わせ</a> |
+  <a href="/greeting.html">ご挨拶</a>
 </footer>
 
-<ul class="toTop-nav">
-  <li><a href="/index.html"><i class="blogicon-home"></i></a></li>
-</ul>
+<!-- ※ 右下のホーム行きボタンは削除済み -->
 
 <script>
-  // カレンダーと時刻セレクタ関連のJavaScriptコード（機能は変更せず）
+  // カレンダーと時刻セレクタの JavaScript コード（機能は従来通り）
   let currentEntry = null;
   const resultText = document.getElementById("resultText");
   const timeSelect = document.getElementById("timeSelect");
